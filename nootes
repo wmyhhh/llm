@@ -1,0 +1,174 @@
+original.py
+16bits
+性能评估结果汇总:
+模型类型: 原始FP16模型
+加载前GPU内存使用: 1106 MB
+推理后GPU内存使用: 7756 MB
+模型内存占用: 5885.97 MB
+平均推理时间: 4.43 秒
+平均生成令牌数: 411.0 个
+平均生成速度: 92.88 令牌/秒
+
+
+bitsandbytes.py
+模型类型: 8位量化模型
+加载前GPU内存使用: 12390 MB
+推理后GPU内存使用: 16228 MB
+模型内存占用: 3239.97 MB
+平均推理时间: 43.55 秒
+平均生成令牌数: 396.0 个
+平均生成速度: 9.09 令牌/秒
+
+模型类型: 4位量化模型 (fp4)
+加载前GPU内存使用: 12439 MB
+推理后GPU内存使用: 15225 MB
+模型内存占用: 1916.97 MB
+平均推理时间: 14.93 秒
+平均生成令牌数: 768.0 个
+平均生成速度: 51.43 令牌/秒
+
+模型类型: 4位量化模型 (nf4)
+加载前GPU内存使用: 12406 MB
+推理后GPU内存使用: 15248 MB
+模型内存占用: 1916.97 MB
+平均推理时间: 40.04 秒
+平均生成令牌数: 2048.0 个
+平均生成速度: 51.15 令牌/秒
+
+模型类型: 4位量化模型 (nf4) + 嵌套量化
+加载前GPU内存使用: 12363 MB
+推理后GPU内存使用: 15122 MB
+模型内存占用: 1916.97 MB
+平均推理时间: 49.69 秒
+平均生成令牌数: 2048.0 个
+平均生成速度: 41.22 令牌/秒
+
+模型类型: GPTQ 2位量化模型
+加载前GPU内存使用: 12403 MB
+推理后GPU内存使用: 13941 MB
+模型内存占用: 1305.18 MB
+平均推理时间: 246.34 秒
+平均生成令牌数: 2048.0 个
+平均生成速度: 8.31 令牌/秒
+
+模型类型: GPTQ 3位量化模型
+加载前GPU内存使用: 12481 MB
+推理后GPU内存使用: 14562 MB
+模型内存占用: 1638.51 MB
+平均推理时间: 492.61 秒
+平均生成令牌数: 2048.0 个
+平均生成速度: 4.16 令牌/秒
+
+模型类型: GPTQ 4位量化模型
+加载前GPU内存使用: 11950 MB
+推理后GPU内存使用: 14574 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 35.63 秒
+平均生成令牌数: 375.0 个
+平均生成速度: 10.53 令牌/秒
+
+模型类型: AWQ 4位量化模型
+加载前GPU内存使用: 1085 MB
+推理后GPU内存使用: 3715 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 30.34 秒
+平均生成令牌数: 375.0 个
+平均生成速度: 12.36 令牌/秒
+
+模型类型: AWQ 4位量化模型(gemm) + 零点量化
+加载前GPU内存使用: 1204 MB
+推理后GPU内存使用: 3835 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 30.32 秒
+平均生成令牌数: 375.0 个
+平均生成速度: 12.37 令牌/秒
+
+模型类型: AWQ 4位量化模型 (ExLlama-v2) + 零点量化
+加载前GPU内存使用: 1234 MB
+推理后GPU内存使用: 3563 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 29.32 秒
+平均生成令牌数: 375.0 个
+平均生成速度: 12.79 令牌/秒
+
+模型类型: AWQ 4位量化模型 (ExLlama-v2) + 融合模块 + 零点量化
+加载前GPU内存使用: 1251 MB
+推理后GPU内存使用: 3842 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 29.77 秒
+平均生成令牌数: 375.0 个
+平均生成速度: 12.60 令牌/秒
+
+模型类型: AWQ 4位量化模型 (ExLlama-v2) + Flash Attention 2 + 零点量化
+加载前GPU内存使用: 1126 MB
+推理后GPU内存使用: 3761 MB
+模型内存占用: 1971.85 MB
+平均推理时间: 48.70 秒
+平均生成令牌数: 615.0 个
+平均生成速度: 12.63 令牌/秒
+
+模型类型: AQLM 2bit量化模型 (Llama-2-7b)
+加载前GPU内存使用: 1109 MB
+推理后GPU内存使用: 4349 MB
+模型内存占用: 2271.11 MB
+平均推理时间: 9.86 秒
+平均生成令牌数: 512.0 个
+平均生成速度: 51.95 令牌/秒
+
+模型类型: Quanto INT8 量化模型
+加载前GPU内存使用: 11926 MB
+推理后GPU内存使用: 15877 MB
+模型内存占用: 5885.97 MB
+平均推理时间: 26.10 秒
+平均生成令牌数: 812.0 个
+平均生成速度: 31.11 令牌/秒
+
+模型类型: Quanto INT4 量化模型
+加载前GPU内存使用: 1077 MB
+推理后GPU内存使用: 3752 MB
+模型内存占用: 5885.97 MB
+平均推理时间: 28.12 秒
+平均生成令牌数: 749.0 个
+平均生成速度: 26.64 令牌/秒
+
+BBH (3-shots, multichoice)
+GPQA (0-shot, multichoice)
+mmlu-pro (5-shots, multichoice)
+Musr (0-shot, multichoice)
+ifeval (0-shot, generative)
+Math-lvl-5 (4-shots, generative, minerva version)
+
+
+hf (pretrained=gptq-2bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: 8
+|  Tasks  |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
+|---------|------:|------|-----:|--------|---|-----:|---|-----:|
+|hellaswag|      1|none  |     0|acc     |↑  |0.2671|±  |0.0044|
+|         |       |none  |     0|acc_norm|↑  |0.2699|±  |0.0044|
+
+hf (pretrained=gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: 8
+|  Tasks  |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
+|---------|------:|------|-----:|--------|---|-----:|---|-----:|
+|hellaswag|      1|none  |     0|acc     |↑  |0.5380|±  |0.0050|
+|         |       |none  |     0|acc_norm|↑  |0.7212|±  |0.0045|
+
+hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: 64
+|          Tasks           |Version|Filter|n-shot| Metric |   |Value|   |Stderr|
+|--------------------------|------:|------|-----:|--------|---|----:|---|-----:|
+|leaderboard_bbh_hyperbaton|      1|none  |     3|acc_norm|↑  |0.584|±  |0.0312|
+ps aux
+
+hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: 4
+|                     Tasks                     |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
+|-----------------------------------------------|------:|------|-----:|--------|---|-----:|---|-----:|
+|leaderboard_bbh_boolean_expressions            |      1|none  |     3|acc_norm|↑  |0.8200|±  |0.0243|
+|leaderboard_bbh_causal_judgement               |      1|none  |     3|acc_norm|↑  |0.5187|±  |0.0366|
+|leaderboard_bbh_date_understanding             |      1|none  |     3|acc_norm|↑  |0.3120|±  |0.0294|
+|leaderboard_bbh_disambiguation_qa              |      1|none  |     3|acc_norm|↑  |0.5440|±  |0.0316|
+|leaderboard_bbh_formal_fallacies               |      1|none  |     3|acc_norm|↑  |0.5080|±  |0.0317|
+|leaderboard_bbh_geometric_shapes               |      1|none  |     3|acc_norm|↑  |0.4080|±  |0.0311|
+|leaderboard_bbh_hyperbaton                     |      1|none  |     3|acc_norm|↑  |0.5800|±  |0.0313|
+|leaderboard_bbh_logical_deduction_five_objects |      1|none  |     3|acc_norm|↑  |0.3080|±  |0.0293|
+|leaderboard_bbh_logical_deduction_seven_objects|      1|none  |     3|acc_norm|↑  |0.2560|±  |0.0277|
+|leaderboard_bbh_logical_deduction_three_objects|      1|none  |     3|acc_norm|↑  |0.5640|±  |0.0314|
+|leaderboard_bbh_movie_recommendation           |      1|none  |     3|acc_norm|↑  |0.6280|±  |0.0306|
+|leaderboard_bbh_navigate                       |      1|none  |     3|acc_norm|↑  |0.6360|±  |0.0305|
