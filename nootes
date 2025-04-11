@@ -141,151 +141,156 @@ Math-lvl-5 (4-shots, generative, minerva version)
  lm_eval --model hf     --model_args pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit --tasks leaderboard_ifeval --batch_size auto:4
 2025-04-02:08:56:31 INFO     [__main__:422] Selected Tasks: ['leaderboard_i
 
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,64,64,64)
-|           Tasks            |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_gpqa            |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_gpqa_diamond |      1|none  |     0|acc_norm|↑  |0.2980|±  |0.0326|
-| - leaderboard_gpqa_extended|      1|none  |     0|acc_norm|↑  |0.3132|±  |0.0199|
-| - leaderboard_gpqa_main    |      1|none  |     0|acc_norm|↑  |0.2723|±  |0.0211|
+hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/llama-3.2-1b-instruct-gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (2,16,32,32,64)
+|                           Tasks                           |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|-----------------------------------------------------------|-------|------|-----:|-----------------------|---|-----:|---|------|
+|leaderboard                                                |    N/A|      |      |                       |   |      |   |      |
+| - leaderboard_bbh                                         |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm               |↑  |0.6520|±  |0.0302|
+|  - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm               |↑  |0.5027|±  |0.0367|
+|  - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm               |↑  |0.3560|±  |0.0303|
+|  - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm               |↑  |0.4360|±  |0.0314|
+|  - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm               |↑  |0.5160|±  |0.0317|
+|  - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm               |↑  |0.2880|±  |0.0287|
+|  - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm               |↑  |0.5160|±  |0.0317|
+|  - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm               |↑  |0.2080|±  |0.0257|
+|  - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm               |↑  |0.1680|±  |0.0237|
+|  - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm               |↑  |0.3360|±  |0.0299|
+|  - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm               |↑  |0.3280|±  |0.0298|
+|  - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm               |↑  |0.4680|±  |0.0316|
+|  - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm               |↑  |0.3800|±  |0.0308|
+|  - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm               |↑  |0.2671|±  |0.0367|
+|  - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm               |↑  |0.1880|±  |0.0248|
+|  - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm               |↑  |0.1600|±  |0.0232|
+|  - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm               |↑  |0.1920|±  |0.0250|
+|  - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm               |↑  |0.5393|±  |0.0375|
+|  - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm               |↑  |0.4760|±  |0.0316|
+|  - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm               |↑  |0.2120|±  |0.0259|
+|  - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm               |↑  |0.1880|±  |0.0248|
+|  - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm               |↑  |0.1280|±  |0.0212|
+|  - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm               |↑  |0.3440|±  |0.0301|
+|  - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm               |↑  |0.5240|±  |0.0316|
+| - leaderboard_gpqa                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_gpqa_diamond                               |      1|none  |     0|acc_norm               |↑  |0.2323|±  |0.0301|
+|  - leaderboard_gpqa_extended                              |      1|none  |     0|acc_norm               |↑  |0.2344|±  |0.0181|
+|  - leaderboard_gpqa_main                                  |      1|none  |     0|acc_norm               |↑  |0.2634|±  |0.0208|
+| - leaderboard_ifeval                                      |      3|none  |     0|inst_level_loose_acc   |↑  |0.6415|±  |   N/A|
+|                                                           |       |none  |     0|inst_level_strict_acc  |↑  |0.6103|±  |   N/A|
+|                                                           |       |none  |     0|prompt_level_loose_acc |↑  |0.5176|±  |0.0215|
+|                                                           |       |none  |     0|prompt_level_strict_acc|↑  |0.4750|±  |0.0215|
+| - leaderboard_math_hard                                   |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_math_algebra_hard                          |      2|none  |     4|exact_match            |↑  |0.0684|±  |0.0144|
+|  - leaderboard_math_counting_and_prob_hard                |      2|none  |     4|exact_match            |↑  |0.0163|±  |0.0115|
+|  - leaderboard_math_geometry_hard                         |      2|none  |     4|exact_match            |↑  |0.0152|±  |0.0107|
+|  - leaderboard_math_intermediate_algebra_hard             |      2|none  |     4|exact_match            |↑  |0.0107|±  |0.0062|
+|  - leaderboard_math_num_theory_hard                       |      2|none  |     4|exact_match            |↑  |0.0130|±  |0.0092|
+|  - leaderboard_math_prealgebra_hard                       |      2|none  |     4|exact_match            |↑  |0.0415|±  |0.0144|
+|  - leaderboard_math_precalculus_hard                      |      2|none  |     4|exact_match            |↑  |0.0148|±  |0.0104|
+| - leaderboard_mmlu_pro                                    |    0.1|none  |     5|acc                    |↑  |0.1572|±  |0.0033|
+| - leaderboard_musr                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_musr_murder_mysteries                      |      1|none  |     0|acc_norm               |↑  |0.5240|±  |0.0316|
+|  - leaderboard_musr_object_placements                     |      1|none  |     0|acc_norm               |↑  |0.2109|±  |0.0255|
+|  - leaderboard_musr_team_allocation                       |      1|none  |     0|acc_norm               |↑  |0.2560|±  |0.0277|
 
+hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,16,32,32,64)
+|                           Tasks                           |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|-----------------------------------------------------------|-------|------|-----:|-----------------------|---|-----:|---|------|
+|leaderboard                                                |    N/A|      |      |                       |   |      |   |      |
+| - leaderboard_bbh                                         |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm               |↑  |0.8240|±  |0.0241|
+|  - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm               |↑  |0.5241|±  |0.0366|
+|  - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm               |↑  |0.3120|±  |0.0294|
+|  - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm               |↑  |0.5480|±  |0.0315|
+|  - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm               |↑  |0.5080|±  |0.0317|
+|  - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm               |↑  |0.4080|±  |0.0311|
+|  - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm               |↑  |0.5840|±  |0.0312|
+|  - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm               |↑  |0.3080|±  |0.0293|
+|  - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm               |↑  |0.2640|±  |0.0279|
+|  - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm               |↑  |0.5600|±  |0.0315|
+|  - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm               |↑  |0.6280|±  |0.0306|
+|  - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm               |↑  |0.6320|±  |0.0306|
+|  - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm               |↑  |0.3440|±  |0.0301|
+|  - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm               |↑  |0.3493|±  |0.0396|
+|  - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm               |↑  |0.3480|±  |0.0302|
+|  - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm               |↑  |0.3640|±  |0.0305|
+|  - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm               |↑  |0.3400|±  |0.0300|
+|  - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm               |↑  |0.4888|±  |0.0376|
+|  - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm               |↑  |0.6520|±  |0.0302|
+|  - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm               |↑  |0.1360|±  |0.0217|
+|  - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm               |↑  |0.1720|±  |0.0239|
+|  - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm               |↑  |0.1320|±  |0.0215|
+|  - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm               |↑  |0.3240|±  |0.0297|
+|  - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm               |↑  |0.5360|±  |0.0316|
+| - leaderboard_gpqa                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_gpqa_diamond                               |      1|none  |     0|acc_norm               |↑  |0.2980|±  |0.0326|
+|  - leaderboard_gpqa_extended                              |      1|none  |     0|acc_norm               |↑  |0.3132|±  |0.0199|
+|  - leaderboard_gpqa_main                                  |      1|none  |     0|acc_norm               |↑  |0.2746|±  |0.0211|
+| - leaderboard_ifeval                                      |      3|none  |     0|inst_level_loose_acc   |↑  |0.2614|±  |   N/A|
+|                                                           |       |none  |     0|inst_level_strict_acc  |↑  |0.2482|±  |   N/A|
+|                                                           |       |none  |     0|prompt_level_loose_acc |↑  |0.1664|±  |0.0160|
+|                                                           |       |none  |     0|prompt_level_strict_acc|↑  |0.1534|±  |0.0155|
+| - leaderboard_math_hard                                   |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_math_algebra_hard                          |      2|none  |     4|exact_match            |↑  |0.1889|±  |0.0224|
+|  - leaderboard_math_counting_and_prob_hard                |      2|none  |     4|exact_match            |↑  |0.0976|±  |0.0269|
+|  - leaderboard_math_geometry_hard                         |      2|none  |     4|exact_match            |↑  |0.0152|±  |0.0107|
+|  - leaderboard_math_intermediate_algebra_hard             |      2|none  |     4|exact_match            |↑  |0.0107|±  |0.0062|
+|  - leaderboard_math_num_theory_hard                       |      2|none  |     4|exact_match            |↑  |0.0455|±  |0.0168|
+|  - leaderboard_math_prealgebra_hard                       |      2|none  |     4|exact_match            |↑  |0.1762|±  |0.0275|
+|  - leaderboard_math_precalculus_hard                      |      2|none  |     4|exact_match            |↑  |0.0296|±  |0.0146|
+| - leaderboard_mmlu_pro                                    |    0.1|none  |     5|acc                    |↑  |0.2976|±  |0.0042|
+| - leaderboard_musr                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_musr_murder_mysteries                      |      1|none  |     0|acc_norm               |↑  |0.5240|±  |0.0316|
+|  - leaderboard_musr_object_placements                     |      1|none  |     0|acc_norm               |↑  |0.3867|±  |0.0305|
+|  - leaderboard_musr_team_allocation                       |      1|none  |     0|acc_norm               |↑  |0.4680|±  |0.0316|
 
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-3bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (16,16,32,32,64)
-|                          Tasks                           |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------------------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_bbh                                           |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm|↑  |0.7160|±  |0.0286|
-| - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm|↑  |0.5187|±  |0.0366|
-| - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm|↑  |0.1440|±  |0.0222|
-| - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm|↑  |0.5640|±  |0.0314|
-| - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm|↑  |0.4720|±  |0.0316|
-| - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm|↑  |0.1320|±  |0.0215|
-| - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm|↑  |0.5400|±  |0.0316|
-| - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm|↑  |0.2000|±  |0.0253|
-| - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm|↑  |0.1960|±  |0.0252|
-| - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm|↑  |0.4120|±  |0.0312|
-| - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm|↑  |0.4600|±  |0.0316|
-| - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm|↑  |0.6160|±  |0.0308|
-| - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm|↑  |0.3000|±  |0.0290|
-| - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm|↑  |0.2192|±  |0.0344|
-| - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm|↑  |0.2240|±  |0.0264|
-| - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm|↑  |0.2800|±  |0.0285|
-| - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm|↑  |0.4000|±  |0.0310|
-| - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm|↑  |0.4494|±  |0.0374|
-| - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm|↑  |0.5320|±  |0.0316|
-| - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm|↑  |0.2000|±  |0.0253|
-| - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm|↑  |0.1800|±  |0.0243|
-| - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm|↑  |0.1560|±  |0.0230|
-| - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm|↑  |0.3320|±  |0.0298|
-| - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm|↑  |0.4880|±  |0.0317|
+hf (pretrained=Qwen/Qwen2.5-3B,dtype=float16,trust_remote_code=True), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,8,16,16,64)
+|                           Tasks                           |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|-----------------------------------------------------------|-------|------|-----:|-----------------------|---|-----:|---|------|
+|leaderboard                                                |    N/A|      |      |                       |   |      |   |      |
+| - leaderboard_bbh                                         |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm               |↑  |0.8160|±  |0.0246|
+|  - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm               |↑  |0.5508|±  |0.0365|
+|  - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm               |↑  |0.4120|±  |0.0312|
+|  - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm               |↑  |0.5320|±  |0.0316|
+|  - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm               |↑  |0.5080|±  |0.0317|
+|  - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm               |↑  |0.4240|±  |0.0313|
+|  - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm               |↑  |0.5760|±  |0.0313|
+|  - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm               |↑  |0.4160|±  |0.0312|
+|  - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm               |↑  |0.3120|±  |0.0294|
+|  - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm               |↑  |0.5880|±  |0.0312|
+|  - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm               |↑  |0.7920|±  |0.0257|
+|  - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm               |↑  |0.6600|±  |0.0300|
+|  - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm               |↑  |0.3600|±  |0.0304|
+|  - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm               |↑  |0.3973|±  |0.0406|
+|  - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm               |↑  |0.3840|±  |0.0308|
+|  - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm               |↑  |0.3600|±  |0.0304|
+|  - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm               |↑  |0.4040|±  |0.0311|
+|  - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm               |↑  |0.6011|±  |0.0368|
+|  - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm               |↑  |0.7280|±  |0.0282|
+|  - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm               |↑  |0.1320|±  |0.0215|
+|  - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm               |↑  |0.1880|±  |0.0248|
+|  - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm               |↑  |0.1280|±  |0.0212|
+|  - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm               |↑  |0.3160|±  |0.0295|
+|  - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm               |↑  |0.5160|±  |0.0317|
+| - leaderboard_gpqa                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_gpqa_diamond                               |      1|none  |     0|acc_norm               |↑  |0.3434|±  |0.0338|
+|  - leaderboard_gpqa_extended                              |      1|none  |     0|acc_norm               |↑  |0.3260|±  |0.0201|
+|  - leaderboard_gpqa_main                                  |      1|none  |     0|acc_norm               |↑  |0.2879|±  |0.0214|
+| - leaderboard_ifeval                                      |      3|none  |     0|inst_level_loose_acc   |↑  |0.3285|±  |   N/A|
+|                                                           |       |none  |     0|inst_level_strict_acc  |↑  |0.3118|±  |   N/A|
+|                                                           |       |none  |     0|prompt_level_loose_acc |↑  |0.2311|±  |0.0181|
+|                                                           |       |none  |     0|prompt_level_strict_acc|↑  |0.2181|±  |0.0178|
+| - leaderboard_math_hard                                   |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_math_algebra_hard                          |      2|none  |     4|exact_match            |↑  |0.2150|±  |0.0235|
+|  - leaderboard_math_counting_and_prob_hard                |      2|none  |     4|exact_match            |↑  |0.0569|±  |0.0210|
+|  - leaderboard_math_geometry_hard                         |      2|none  |     4|exact_match            |↑  |0.0227|±  |0.0130|
+|  - leaderboard_math_intermediate_algebra_hard             |      2|none  |     4|exact_match            |↑  |0.0286|±  |0.0100|
+|  - leaderboard_math_num_theory_hard                       |      2|none  |     4|exact_match            |↑  |0.0779|±  |0.0217|
+|  - leaderboard_math_prealgebra_hard                       |      2|none  |     4|exact_match            |↑  |0.2332|±  |0.0305|
+|  - leaderboard_math_precalculus_hard                      |      2|none  |     4|exact_match            |↑  |0.0296|±  |0.0146|
+| - leaderboard_mmlu_pro                                    |    0.1|none  |     5|acc                    |↑  |0.3248|±  |0.0043|
+| - leaderboard_musr                                        |    N/A|      |      |                       |   |      |   |      |
+|  - leaderboard_musr_murder_mysteries                      |      1|none  |     0|acc_norm               |↑  |0.5200|±  |0.0317|
+|  - leaderboard_musr_object_placements                     |      1|none  |     0|acc_norm               |↑  |0.3672|±  |0.0302|
+|  - leaderboard_musr_team_allocation                       |      1|none  |     0|acc_norm               |↑  |0.3960|±  |0.0310|
 
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-4bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (8,32,32,32,64)
-|                          Tasks                           |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------------------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_bbh                                           |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm|↑  |0.8240|±  |0.0241|
-| - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm|↑  |0.5241|±  |0.0366|
-| - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm|↑  |0.3120|±  |0.0294|
-| - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm|↑  |0.5480|±  |0.0315|
-| - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm|↑  |0.5080|±  |0.0317|
-| - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm|↑  |0.4080|±  |0.0311|
-| - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm|↑  |0.5840|±  |0.0312|
-| - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm|↑  |0.3080|±  |0.0293|
-| - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm|↑  |0.2640|±  |0.0279|
-| - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm|↑  |0.5600|±  |0.0315|
-| - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm|↑  |0.6280|±  |0.0306|
-| - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm|↑  |0.6320|±  |0.0306|
-| - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm|↑  |0.3440|±  |0.0301|
-| - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm|↑  |0.3493|±  |0.0396|
-| - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm|↑  |0.3480|±  |0.0302|
-| - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm|↑  |0.3640|±  |0.0305|
-| - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm|↑  |0.3400|±  |0.0300|
-| - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm|↑  |0.4888|±  |0.0376|
-| - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm|↑  |0.6520|±  |0.0302|
-| - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm|↑  |0.1360|±  |0.0217|
-| - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm|↑  |0.1720|±  |0.0239|
-| - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm|↑  |0.1320|±  |0.0215|
-| - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm|↑  |0.3240|±  |0.0297|
-| - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm|↑  |0.5360|±  |0.0316|
-
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-3bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,64,64,64)
-|           Tasks            |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_gpqa            |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_gpqa_diamond |      1|none  |     0|acc_norm|↑  |0.2980|±  |0.0326|
-| - leaderboard_gpqa_extended|      1|none  |     0|acc_norm|↑  |0.2509|±  |0.0186|
-| - leaderboard_gpqa_main    |      1|none  |     0|acc_norm|↑  |0.2790|±  |0.0212|
-
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-2bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,64,64,64)
-|           Tasks            |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_gpqa            |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_gpqa_diamond |      1|none  |     0|acc_norm|↑  |0.2525|±  |0.0310|
-| - leaderboard_gpqa_extended|      1|none  |     0|acc_norm|↑  |0.2546|±  |0.0187|
-| - leaderboard_gpqa_main    |      1|none  |     0|acc_norm|↑  |0.2679|±  |0.0209|
-
-hf (pretrained=/home/lxrobotlab-4090-a/wmy/qwen/gptq-2bit), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (16,32,32,32,64)
-|                          Tasks                           |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------------------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_bbh                                           |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm|↑  |0.5120|±  |0.0317|
-| - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm|↑  |0.4813|±  |0.0366|
-| - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm|↑  |0.2040|±  |0.0255|
-| - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm|↑  |0.3480|±  |0.0302|
-| - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm|↑  |0.4800|±  |0.0317|
-| - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm|↑  |0.1680|±  |0.0237|
-| - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm|↑  |0.4680|±  |0.0316|
-| - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm|↑  |0.2040|±  |0.0255|
-| - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm|↑  |0.1200|±  |0.0206|
-| - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm|↑  |0.3440|±  |0.0301|
-| - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm|↑  |0.2240|±  |0.0264|
-| - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm|↑  |0.4680|±  |0.0316|
-| - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm|↑  |0.0640|±  |0.0155|
-| - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm|↑  |0.1575|±  |0.0303|
-| - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm|↑  |0.1000|±  |0.0190|
-| - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm|↑  |0.2800|±  |0.0285|
-| - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm|↑  |0.1920|±  |0.0250|
-| - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm|↑  |0.5281|±  |0.0375|
-| - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm|↑  |0.4480|±  |0.0315|
-| - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm|↑  |0.2680|±  |0.0281|
-| - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm|↑  |0.2560|±  |0.0277|
-| - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm|↑  |0.1600|±  |0.0232|
-| - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm|↑  |0.3240|±  |0.0297|
-| - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm|↑  |0.4640|±  |0.0316|
-
-hf (pretrained=Qwen/Qwen2.5-3B,dtype=float16,trust_remote_code=True), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (1,64,64,64)
-|           Tasks            |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_gpqa            |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_gpqa_diamond |      1|none  |     0|acc_norm|↑  |0.3333|±  |0.0336|
-| - leaderboard_gpqa_extended|      1|none  |     0|acc_norm|↑  |0.3242|±  |0.0200|
-| - leaderboard_gpqa_main    |      1|none  |     0|acc_norm|↑  |0.2835|±  |0.0213|
-
-hf (pretrained=Qwen/Qwen2.5-3B,dtype=float16,trust_remote_code=True), gen_kwargs: (None), limit: None, num_fewshot: None, batch_size: auto:4 (8,16,16,16,64)
-|                          Tasks                           |Version|Filter|n-shot| Metric |   |Value |   |Stderr|
-|----------------------------------------------------------|-------|------|-----:|--------|---|-----:|---|-----:|
-|leaderboard_bbh                                           |    N/A|      |      |        |   |      |   |      |
-| - leaderboard_bbh_boolean_expressions                    |      1|none  |     3|acc_norm|↑  |0.8160|±  |0.0246|
-| - leaderboard_bbh_causal_judgement                       |      1|none  |     3|acc_norm|↑  |0.5508|±  |0.0365|
-| - leaderboard_bbh_date_understanding                     |      1|none  |     3|acc_norm|↑  |0.4120|±  |0.0312|
-| - leaderboard_bbh_disambiguation_qa                      |      1|none  |     3|acc_norm|↑  |0.5320|±  |0.0316|
-| - leaderboard_bbh_formal_fallacies                       |      1|none  |     3|acc_norm|↑  |0.5080|±  |0.0317|
-| - leaderboard_bbh_geometric_shapes                       |      1|none  |     3|acc_norm|↑  |0.4240|±  |0.0313|
-| - leaderboard_bbh_hyperbaton                             |      1|none  |     3|acc_norm|↑  |0.5760|±  |0.0313|
-| - leaderboard_bbh_logical_deduction_five_objects         |      1|none  |     3|acc_norm|↑  |0.4160|±  |0.0312|
-| - leaderboard_bbh_logical_deduction_seven_objects        |      1|none  |     3|acc_norm|↑  |0.3120|±  |0.0294|
-| - leaderboard_bbh_logical_deduction_three_objects        |      1|none  |     3|acc_norm|↑  |0.5880|±  |0.0312|
-| - leaderboard_bbh_movie_recommendation                   |      1|none  |     3|acc_norm|↑  |0.7920|±  |0.0257|
-| - leaderboard_bbh_navigate                               |      1|none  |     3|acc_norm|↑  |0.6600|±  |0.0300|
-| - leaderboard_bbh_object_counting                        |      1|none  |     3|acc_norm|↑  |0.3600|±  |0.0304|
-| - leaderboard_bbh_penguins_in_a_table                    |      1|none  |     3|acc_norm|↑  |0.3973|±  |0.0406|
-| - leaderboard_bbh_reasoning_about_colored_objects        |      1|none  |     3|acc_norm|↑  |0.3840|±  |0.0308|
-| - leaderboard_bbh_ruin_names                             |      1|none  |     3|acc_norm|↑  |0.3600|±  |0.0304|
-| - leaderboard_bbh_salient_translation_error_detection    |      1|none  |     3|acc_norm|↑  |0.4000|±  |0.0310|
-| - leaderboard_bbh_snarks                                 |      1|none  |     3|acc_norm|↑  |0.6011|±  |0.0368|
-| - leaderboard_bbh_sports_understanding                   |      1|none  |     3|acc_norm|↑  |0.7280|±  |0.0282|
-| - leaderboard_bbh_temporal_sequences                     |      1|none  |     3|acc_norm|↑  |0.1320|±  |0.0215|
-| - leaderboard_bbh_tracking_shuffled_objects_five_objects |      1|none  |     3|acc_norm|↑  |0.1880|±  |0.0248|
-| - leaderboard_bbh_tracking_shuffled_objects_seven_objects|      1|none  |     3|acc_norm|↑  |0.1280|±  |0.0212|
-| - leaderboard_bbh_tracking_shuffled_objects_three_objects|      1|none  |     3|acc_norm|↑  |0.3160|±  |0.0295|
-| - leaderboard_bbh_web_of_lies                            |      1|none  |     3|acc_norm|↑  |0.5120|±  |0.0317|
