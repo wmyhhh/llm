@@ -1,9 +1,9 @@
 import torch
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 from ..base import BaseQuantizer
-from ..registry import register_quantizer
+#from ..registry import register_quantizer
 
-@register_quantizer("bnb")
+#@register_quantizer("bnb")
 class BnBQuantizer(BaseQuantizer):
     """
     BitsAndBytes 量化实现

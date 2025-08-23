@@ -1,0 +1,17 @@
+# Python cache files
+__pycache__/
+
+# Ignore all _cache directories recursively
+**/*_cache/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/

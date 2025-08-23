@@ -1,25 +1,13 @@
 import os
 from datasets import load_dataset
 from gptqmodel import GPTQModel, QuantizeConfig
-from ..registry import register_quantizer
+from ..base import BaseQuantizer
+#from ..registry import register_quantizer
 
-@register_quantizer("gptq")
-class GPTQQuantizer:
+#@register_quantizer("gptq")
+class GPTQQuantizer(BaseQuantizer):
     def __init__(self, model, quant_type="4bit", device_map="auto", save_tokenizer=True, **kwargs):
-        """
-        GPTQ 量化器
-        Args:
-            model (str): HuggingFace 模型名称 或 本地路径
-            quant_type (str): "4bit" 或 "8bit"
-            device_map (str): "cuda" / "cpu" / "auto"
-            save_tokenizer (bool): 是否保存 tokenizer
-        """
-        self.model_name_or_path = model
-        self.quant_type = quant_type
-        self.device_map = device_map
-        self.save_tokenizer = save_tokenizer
-        self.model = None
-        self.quantized = False
+        super().__init__(model, device_map, save_tokenizer, quant_type, **kwargs)
 
     def quantize(self, calib_dataset=None, batch_size=1):
         """执行 GPTQ 量化"""

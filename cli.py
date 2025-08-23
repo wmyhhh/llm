@@ -3,11 +3,13 @@ import os
 import shutil
 import torch
 from transformers import AutoTokenizer
-from MyLibrary.registry import get_quantizer
 
+#from .registry import get_quantizer
+#from .methods import GPTQQuantizer, BnBQuantizer, AQLMQuantizer  # 确保量化方法被注册
+from .methods import *  # 确保量化方法被注册
 
+# copy tokenizer files
 def copy_tokenizer(src, dst):
-    """复制 tokenizer 相关文件"""
     tokenizer_files = [
         "tokenizer.json",
         "tokenizer.model",
@@ -26,7 +28,7 @@ def copy_tokenizer(src, dst):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="LLM Quantization CLI - 支持 BitsAndBytes 量化"
+        description="LLM Quantization CLI - supports BnB and GPTQ methods"
     )
 
     parser.add_argument(
@@ -75,7 +77,7 @@ def main():
     parser.add_argument(
         "--method",
         type=str,
-        choices=["bnb", "gptq"],
+        choices=["bnb", "gptq", "aqlm"],
         default="bnb",
         help="选择量化方法: bnb 或 gptq"
     )
@@ -96,21 +98,29 @@ def main():
 
     # 获取量化器
     # 获取量化器
-    QuantizerClass = get_quantizer(args.method)
+    #QuantizerClass = get_quantizer(args.method)
 
     if args.method == "bnb":
-        quantizer = QuantizerClass(
+        quantizer = BnBQuantizer(
             model=model_name_or_path,
             quant_type=args.quant_type,
             bnb_4bit_compute_dtype=bnb_dtype,
             device_map=args.device
         )
     elif args.method == "gptq":
-        quantizer = QuantizerClass(
+        quantizer = GPTQQuantizer(
             model=model_name_or_path,
             bits=int(args.quant_type.replace("bit", "")),
             group_size=128  # 可以通过 args 增加可配置项
         )
+
+    elif args.method == "aqlm":
+        quantizer = AQLMQuantizer(
+            model=model_name_or_path,
+            quant_type=args.quant_type,
+            device_map=args.device
+        )
+
     else:
         raise ValueError(f"Unsupported quantization method: {args.method}")
 
