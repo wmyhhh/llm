@@ -1,0 +1,5 @@
+--model_name MODEL_NAME   # 网络模型
+--model_path MODEL_PATH   # 本地模型
+--quant_method bnb        # 量化方法
+--bits 4                  # 量化位数
+--save_dir ./quant_models  # 保存路径
