@@ -5,42 +5,44 @@ from ..base import BaseQuantizer
 
 #@register_quantizer("bnb")
 class BnBQuantizer(BaseQuantizer):
-    """
-    BitsAndBytes 量化实现
-    支持 4-bit 和 8-bit 量化
-    """
-
-    def __init__(self, model, **kwargs):
-        """
-        :param model: HuggingFace 的模型名字 或 torch.nn.Module
-        :param kwargs:
-            - quant_type: "4bit" 或 "8bit" (默认 "4bit")
-            - bnb_4bit_compute_dtype: torch.float16 / torch.bfloat16 等
-            - device_map: 模型放置设备 (默认 "auto")
-        """
-        super().__init__(model, **kwargs)
-        self.quantized = None
-
+    def __init__(
+        self,
+        model,
+        device_map="auto",
+        quant_type="4bit",  # bnb 一般是 4bit/8bit
+        save_tokenizer=True,
+        save_dir=None,
+        **kwargs
+    ):
+        super().__init__(
+            model=model,
+            device_map=device_map,
+            quant_type=quant_type,
+            save_tokenizer=save_tokenizer,
+            save_dir=save_dir or "bnb",
+            **kwargs
+        )
+        
     def quantize(self):
         quant_type = self.kwargs.get("quant_type", "4bit")
         device_map = self.kwargs.get("device_map", "auto")
         bnb_4bit_compute_dtype = self.kwargs.get("bnb_4bit_compute_dtype", torch.float16)
 
-        if isinstance(self.model, str):
+        if isinstance(self.model_name_or_path, str):
             if quant_type == "4bit":
                 quant_config = BitsAndBytesConfig(
                     load_in_4bit=True,
                     bnb_4bit_compute_dtype=bnb_4bit_compute_dtype
                 )
                 self.quantized = AutoModelForCausalLM.from_pretrained(
-                    self.model,
+                    self.model_name_or_path,
                     quantization_config=quant_config,
                     device_map=device_map,
                 )
             elif quant_type == "8bit":
                 quant_config = BitsAndBytesConfig(load_in_8bit=True)
                 self.quantized = AutoModelForCausalLM.from_pretrained(
-                    self.model,
+                    self.model_name_or_path,
                     quantization_config=quant_config,
                     device_map=device_map,
                 )

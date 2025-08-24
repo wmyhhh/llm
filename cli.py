@@ -44,9 +44,9 @@ def main():
     parser.add_argument(
         "--quant_type",
         type=str,
-        choices=["4bit", "8bit"],
+        choices=["4bit", "8bit", "2bit"],
         default="4bit",
-        help="量化类型: 4bit 或 8bit"
+        help="量化类型: 2bit, 4bit 或 8bit"
     )
     parser.add_argument(
         "--bnb_dtype",
@@ -64,7 +64,6 @@ def main():
     parser.add_argument(
         "--save_dir",
         type=str,
-        default="quantized_model",
         help="量化模型保存路径"
     )
     # 是否保存原 tokenizer
@@ -77,7 +76,7 @@ def main():
     parser.add_argument(
         "--method",
         type=str,
-        choices=["bnb", "gptq", "aqlm"],
+        choices=["bnb", "gptq", "aqlm", "awq"],
         default="bnb",
         help="选择量化方法: bnb 或 gptq"
     )
@@ -100,54 +99,53 @@ def main():
     # 获取量化器
     #QuantizerClass = get_quantizer(args.method)
 
+    #print("model_name_or_path:", model_name_or_path, type(model_name_or_path))
+
+    # 初始化量化器
     if args.method == "bnb":
         quantizer = BnBQuantizer(
             model=model_name_or_path,
             quant_type=args.quant_type,
             bnb_4bit_compute_dtype=bnb_dtype,
-            device_map=args.device
+            device_map=args.device,
+            save_dir=args.save_dir  # 如果用户没传，这里为 None，会使用类内默认 "bnb"
         )
     elif args.method == "gptq":
         quantizer = GPTQQuantizer(
             model=model_name_or_path,
-            bits=int(args.quant_type.replace("bit", "")),
-            group_size=128  # 可以通过 args 增加可配置项
+            quant_type=args.quant_type,
+            device_map=args.device,
+            save_dir=args.save_dir  # 默认 "gptq"
         )
-
     elif args.method == "aqlm":
         quantizer = AQLMQuantizer(
             model=model_name_or_path,
             quant_type=args.quant_type,
+            device_map=args.device,
+            save_dir=args.save_dir  # 默认 "aqlm"
+        )
+    elif args.method == "awq":
+        quantizer = AWQQuantizer(
+            model=model_name_or_path,
+            quant_type=args.quant_type,
             device_map=args.device
         )
-
     else:
         raise ValueError(f"Unsupported quantization method: {args.method}")
-
 
     print(f"开始量化模型 {model_name_or_path} ...")
     quantized_model = quantizer.quantize()
 
-    save_path = os.path.abspath(args.save_dir)
+    # 保存路径使用量化器内部的 save_dir 默认值
+    save_path = os.path.abspath(quantizer.save_dir)
     quantizer.save(save_path)
     print(f"量化模型已保存到: {save_path}")
+
 
     # 可选：复制 tokenizer
     if args.save_tokenizer:
         copy_tokenizer(model_name_or_path, save_path)
         print("[Info] tokenizer 文件已保存到量化目录")
-
-    # 简单测试推理
-    try:
-        tokenizer = AutoTokenizer.from_pretrained(
-            save_path if args.save_tokenizer else model_name_or_path
-        )
-        inputs = tokenizer("Hello, this is a test", return_tensors="pt").to(args.device)
-        with torch.no_grad():
-            outputs = quantized_model.generate(**inputs, max_new_tokens=20)
-        print("生成文本示例:", tokenizer.decode(outputs[0]))
-    except Exception as e:
-        print(f"[Warning] 推理测试失败: {e}")
 
 
 if __name__ == "__main__":

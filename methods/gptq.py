@@ -2,18 +2,40 @@ import os
 from datasets import load_dataset
 from gptqmodel import GPTQModel, QuantizeConfig
 from ..base import BaseQuantizer
-#from ..registry import register_quantizer
 
-#@register_quantizer("gptq")
 class GPTQQuantizer(BaseQuantizer):
-    def __init__(self, model, quant_type="4bit", device_map="auto", save_tokenizer=True, **kwargs):
-        super().__init__(model, device_map, save_tokenizer, quant_type, **kwargs)
+    def __init__(
+        self,
+        model,
+        device_map="auto",
+        quant_type="4bit",  # 支持 "2bit", "3bit", "4bit"
+        save_tokenizer=True,
+        save_dir=None,
+        **kwargs
+    ):
+        """
+        GPTQ 量化器，支持 2/3/4 bit 量化
+        :param model: HuggingFace 模型名 或 torch.nn.Module
+        :param kwargs: 其他参数
+        """
+        super().__init__(
+            model=model,
+            device_map=device_map,
+            quant_type=quant_type,
+            save_tokenizer=save_tokenizer,
+            save_dir=save_dir or "gptq",
+            **kwargs
+        )
 
     def quantize(self, calib_dataset=None, batch_size=1):
         """执行 GPTQ 量化"""
-        bits = 4 if self.quant_type == "4bit" else 8
-        quant_config = QuantizeConfig(bits=bits, group_size=128)
+        allowed_bits = [2, 3, 4]
+        # 从 quant_type 字符串提取位数
+        bits = int(self.quant_type.replace("bit", ""))
+        if bits not in allowed_bits:
+            raise ValueError(f"[GPTQ] Unsupported bits: {bits}. Allowed: {allowed_bits}")
 
+        quant_config = QuantizeConfig(bits=bits, group_size=128)
         print(f"[GPTQ] 加载模型 {self.model_name_or_path} ...")
         self.model = GPTQModel.load(self.model_name_or_path, quant_config)
 
@@ -30,15 +52,16 @@ class GPTQQuantizer(BaseQuantizer):
         self.quantized = True
         return self.model
 
-    def save(self, save_dir: str):
+    def save(self, save_dir: str = None):
         """保存 GPTQ 模型"""
+        save_dir = save_dir or self.save_dir
         if not self.quantized:
-            raise RuntimeError("请先调用 quantize() 再保存！")
+            raise RuntimeError("[GPTQ] 请先调用 quantize() 再保存！")
 
         os.makedirs(save_dir, exist_ok=True)
         print(f"[GPTQ] 保存量化模型到 {save_dir} ...")
         self.model.save(save_dir)
 
-        if self.save_tokenizer:
+        if self.save_tokenizer and hasattr(self.model, "tokenizer"):
             print("[GPTQ] 保存 tokenizer ...")
             self.model.tokenizer.save_pretrained(save_dir)

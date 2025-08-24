@@ -7,8 +7,23 @@ from ..base import BaseQuantizer
 
 #@register_quantizer("aqlm")
 class AQLMQuantizer(BaseQuantizer):
-    def __init__(self, model, device_map="auto", save_tokenizer=False, quant_type=None, **kwargs):
-        super().__init__(model, device_map, save_tokenizer, quant_type, **kwargs)
+    def __init__(
+        self,
+        model,
+        device_map="auto",
+        quant_type=None,
+        save_tokenizer=False,  # AQLM 默认不保存 tokenizer
+        save_dir=None,
+        **kwargs
+    ):
+        super().__init__(
+            model=model,
+            device_map=device_map,
+            quant_type=quant_type,
+            save_tokenizer=save_tokenizer,
+            save_dir=save_dir or "aqlm",
+            **kwargs
+        )
         self.tokenizer = None
 
     def quantize(self):

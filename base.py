@@ -3,15 +3,20 @@ from abc import ABC, abstractmethod
 import os
 
 class BaseQuantizer(ABC):
-    """
-    抽象基类：所有量化方法都要继承它
-    """
-
-    def __init__(self, model: str, device_map="auto", save_tokenizer=True, quant_type=None, **kwargs):
+    def __init__(
+        self,
+        model: str,
+        device_map: str = "auto",
+        quant_type: str = None,
+        save_tokenizer: bool = True,
+        save_dir: str = None,
+        **kwargs
+    ):
         self.model_name_or_path = model  # HuggingFace 模型名或本地路径
         self.device_map = device_map
-        self.save_tokenizer = save_tokenizer
         self.quant_type = quant_type
+        self.save_tokenizer = save_tokenizer
+        self.save_dir = save_dir or self.__class__.__name__.replace("Quantizer", "").lower()
         self.model = None
         self.quantized = False
         self.kwargs = kwargs

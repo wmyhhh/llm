@@ -2,7 +2,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # 模型和 tokenizer 路径
-MODEL_DIR = "/home/lxrobotlab-4090-a/wmy/quantized_model"
+MODEL_DIR = "/home/lxrobotlab-4090-a/wmy/gptq"
 
 # 加载 tokenizer
 tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR)
