@@ -2,7 +2,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 # Path to your quantized model
-model_path = "/home/lxrobotlab-4090-a/wmy/bnb"
+model_path = "/home/lxrobotlab-4090-a/wmy/bnb_4bit"
 
 # Load tokenizer
 tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3-1.7B")

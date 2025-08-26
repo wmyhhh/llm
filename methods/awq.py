@@ -7,22 +7,26 @@ import os
 class AWQQuantizer(BaseQuantizer):
     def __init__(
         self,
-        model,
+        model_path,
+        model_name=None,
         device_map="auto",
-        quant_type="4bit",  # AWQ 默认支持 2/3/4bit
         save_tokenizer=True,
         save_dir=None,
         **kwargs
     ):
         """
-        :param model: HuggingFace 模型名或本地路径
-        :param quant_type: 量化位数，支持 2, 3, 4
-        :param kwargs: 其他参数，例如 zero_point, q_group_size, version
+        :param model_path: 模型路径或 HF hub 名
+        :param model_name: 模型别名
+        :param device_map: "auto" / "cuda" / "cpu"
+        :param save_tokenizer: 是否保存 tokenizer
+        :param save_dir: 保存路径
+        :param kwargs: 量化参数 (bits, zero_point, q_group_size, version)
         """
         super().__init__(
-            model=model,
+            model=model_path,
+            model_name=model_name,
             device_map=device_map,
-            quant_type=quant_type,
+            quant_type=str(kwargs.get("bits", 4)) + "bit",  # 统一风格
             save_tokenizer=save_tokenizer,
             save_dir=save_dir or "awq",
             **kwargs
@@ -32,19 +36,25 @@ class AWQQuantizer(BaseQuantizer):
     def quantize(self):
         # 确保位数有效
         allowed_bits = [2, 3, 4]
-        bits = int(self.quant_type.replace("bit", ""))
+        bits = int(self.kwargs.get("bits", 4))
         if bits not in allowed_bits:
             raise ValueError(f"AWQ only supports {allowed_bits} bits, got {bits}")
 
         print(f"[AWQ] Loading model {self.model_name_or_path}")
-        self.model = AutoAWQForCausalLM.from_pretrained(self.model_name_or_path)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name_or_path, trust_remote_code=True)
+        self.model = AutoAWQForCausalLM.from_pretrained(
+            self.model_name_or_path,
+            device_map=self.device_map,
+        )
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            self.model_name_or_path,
+            trust_remote_code=True
+        )
 
         quant_config = {
             "w_bit": bits,
             "zero_point": self.kwargs.get("zero_point", True),
             "q_group_size": self.kwargs.get("q_group_size", 128),
-            "version": self.kwargs.get("version", "GEMM")
+            "version": self.kwargs.get("version", "GEMM"),
         }
 
         print(f"[AWQ] Quantizing with config: {quant_config}")

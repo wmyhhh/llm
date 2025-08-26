@@ -2,11 +2,12 @@ import argparse
 import os
 import shutil
 import torch
-from transformers import AutoTokenizer
+import sys
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
-#from .registry import get_quantizer
-#from .methods import GPTQQuantizer, BnBQuantizer, AQLMQuantizer  # 确保量化方法被注册
 from .methods import *  # 确保量化方法被注册
+from .methods.args_registry import METHOD_ARGS, QUANTIZER_REGISTRY
+
 
 # copy tokenizer files
 def copy_tokenizer(src, dst):
@@ -26,115 +27,82 @@ def copy_tokenizer(src, dst):
             print(f"[Info] 已复制 {f} 到 {dst}")
 
 
+def validate_args(method, args_dict):
+    """检查参数是否合法"""
+    if method not in METHOD_ARGS:
+        raise ValueError(f"未知的量化方法: {method}, 可选: {list(METHOD_ARGS.keys())}")
+    
+    valid_args = METHOD_ARGS[method]    # returns a dict(e.g. bnb_args)
+
+    # k: keys(e.g. quanti_type), v: values(e.g. ['4bit', '8bit'])
+    for k, v in args_dict.items():
+        # 检查参数名是否有效
+        if k not in valid_args:
+            raise ValueError(f"参数 {k} 不属于 {method} 的参数集合: {list(valid_args.keys())}")
+        
+        allowed_types_or_vals = valid_args[k]
+
+        # 判断值是否符合
+        if isinstance(allowed_types_or_vals[0], type):
+            # 类型约束
+            if not isinstance(v, tuple(allowed_types_or_vals)):
+                raise TypeError(f"参数 {k} 需要类型 {allowed_types_or_vals}, 但传入 {type(v)}")
+        else:
+            # 值枚举约束
+            if v not in allowed_types_or_vals:
+                raise ValueError(f"参数 {k} 的值 {v} 不在允许范围 {allowed_types_or_vals}")
+    
+    return True
+
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="LLM Quantization CLI - supports BnB and GPTQ methods"
-    )
-
-    parser.add_argument(
-        "--model_name",
-        type=str,
-        help="HuggingFace Hub 模型名称 (可选)"
-    )
-    parser.add_argument(
-        "--model_path",
-        type=str,
-        help="本地模型路径 (可选)"
-    )
-    parser.add_argument(
-        "--quant_type",
-        type=str,
-        choices=["4bit", "8bit", "2bit"],
-        default="4bit",
-        help="量化类型: 2bit, 4bit 或 8bit"
-    )
-    parser.add_argument(
-        "--bnb_dtype",
-        type=str,
-        choices=["float16", "bfloat16"],
-        default="float16",
-        help="4bit 量化计算类型 (仅 4bit 有效)"
-    )
-    parser.add_argument(
-        "--device",
-        type=str,
-        default="auto",
-        help="模型放置设备: auto / cuda / cpu"
-    )
-    parser.add_argument(
-        "--save_dir",
-        type=str,
-        help="量化模型保存路径"
-    )
-    # 是否保存原 tokenizer
-    parser.add_argument(
-        "--save_tokenizer",
-        action="store_true",
-        help="是否将原模型的 tokenizer 一起复制到保存目录"
-    )
-
-    parser.add_argument(
-        "--method",
-        type=str,
-        choices=["bnb", "gptq", "aqlm", "awq"],
-        default="bnb",
-        help="选择量化方法: bnb 或 gptq"
-    )
+    parser = argparse.ArgumentParser(description="模型量化工具")
+    parser.add_argument("--model_name", type=str, help="HuggingFace 模型名，例如 gpt2")
+    parser.add_argument("--model_path", type=str, help="本地模型路径")
+    parser.add_argument("--method", type=str, required=True, help="选择量化方法: gptq, bnb 等")
+    parser.add_argument("--quant_type", type=str)
+    parser.add_argument("--device_map", type=str)
+    parser.add_argument("--save_tokenizer", type=bool)
+    parser.add_argument("--save_dir", type=str)
+    parser.add_argument("--bnb_4bit_compute_dtype", type=str)
+    parser.add_argument("--bnb_4bit_quant_type", type=str)
+    parser.add_argument("--bnb_4bit_use_double_quant", type=bool)
+    parser.add_argument("--batch_size", type=int)
+    parser.add_argument("--calib_dataset", type=str)
+    parser.add_argument("--gptq_group_size", type=int)
+    parser.add_argument("--gptq_act_order", type=bool)
 
     args = parser.parse_args()
+    args_dict = vars(args)  # Convert Namespace to dict
 
-    # 判断用户到底是给了 name 还是 path
+    method = args_dict.pop("method")    # get the method and remove it from args_dict
+
+    # 校验参数
+    try:
+        validate_args(method, {k: v for k, v in args_dict.items() if v is not None})
+    except (ValueError, TypeError) as e:
+        print(f"[参数错误] {e}")
+        sys.exit(1)
+
+    # 找到对应 Quantizer 并调用
+    if method not in QUANTIZER_REGISTRY:
+        print(f"未注册的量化方法: {method}")
+        sys.exit(1)
+
     if args.model_path:
         model_name_or_path = args.model_path
     elif args.model_name:
         model_name_or_path = args.model_name
     else:
         raise ValueError("请提供 --model_name 或 --model_path 中至少一个")
+    
 
-    # 将 dtype 字符串转换为 torch 类型
-    dtype_map = {"float16": torch.float16, "bfloat16": torch.bfloat16}
-    bnb_dtype = dtype_map[args.bnb_dtype]
+    QuantizerClass = QUANTIZER_REGISTRY[method]
+    model= model_name_or_path
+    quantizer = QuantizerClass(model, **{k: v for k, v in args_dict.items() if v is not None})
+    quantizer.quantize()
+    print(f"✅ 成功完成 {method} 量化")
 
-    # 获取量化器
-    # 获取量化器
-    #QuantizerClass = get_quantizer(args.method)
-
-    #print("model_name_or_path:", model_name_or_path, type(model_name_or_path))
-
-    # 初始化量化器
-    if args.method == "bnb":
-        quantizer = BnBQuantizer(
-            model=model_name_or_path,
-            quant_type=args.quant_type,
-            bnb_4bit_compute_dtype=bnb_dtype,
-            device_map=args.device,
-            save_dir=args.save_dir  # 如果用户没传，这里为 None，会使用类内默认 "bnb"
-        )
-    elif args.method == "gptq":
-        quantizer = GPTQQuantizer(
-            model=model_name_or_path,
-            quant_type=args.quant_type,
-            device_map=args.device,
-            save_dir=args.save_dir  # 默认 "gptq"
-        )
-    elif args.method == "aqlm":
-        quantizer = AQLMQuantizer(
-            model=model_name_or_path,
-            quant_type=args.quant_type,
-            device_map=args.device,
-            save_dir=args.save_dir  # 默认 "aqlm"
-        )
-    elif args.method == "awq":
-        quantizer = AWQQuantizer(
-            model=model_name_or_path,
-            quant_type=args.quant_type,
-            device_map=args.device
-        )
-    else:
-        raise ValueError(f"Unsupported quantization method: {args.method}")
-
-    print(f"开始量化模型 {model_name_or_path} ...")
-    quantized_model = quantizer.quantize()
 
     # 保存路径使用量化器内部的 save_dir 默认值
     save_path = os.path.abspath(quantizer.save_dir)
